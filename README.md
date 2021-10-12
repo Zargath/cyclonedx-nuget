@@ -13,6 +13,18 @@ and creates a valid CycloneDX bill-of-material document from the results. Cyclon
 specification that is easily created, human readable, and simple to parse. The resulting bom.xml can be used
 with tools such as [OWASP Dependency-Track](https://dependencytrack.org/) for the continuous analysis of components.
 
+Requirements for development
+-------------------
+* [Java SDK](https://www.oracle.com/java/technologies/downloads/)
+* [Apache Maven](https://maven.apache.org/download.cgi)
+
+How to Build this Project?
+-------------------
+```bash
+mvn clean
+mvn release:clean release:prepare
+```
+
 Usage
 -------------------
 When building, the release will be created in the target/release directory. This directory contains
