@@ -40,12 +40,20 @@ public class AssetsParser {
         final JSONObject libraries = root.optJSONObject("libraries");
         for (String key : libraries.keySet()) {
             final JSONObject library = libraries.getJSONObject(key);
+            final String type = library.optString("type");
+
+            if (type.compareTo("package") != 0 ) {
+                System.out.println("Skipping library that is not a package. it was a :" + type);
+                continue;
+            }
+
             final String path = library.optString("path");
             final int seperator = path.indexOf("/");
             final String id = path.substring(0, seperator);
             final String version = path.substring(seperator + 1, path.length());
 
             final PackageDocument packageDocument = client.retrievePackage(id, version);
+            if(packageDocument == null) continue;
             final PackageDocument.Package pkg = packageDocument.getPackage();
             final PackageDocument.Package.Metadata metadata = pkg.getMetadata();
 
@@ -78,6 +86,7 @@ public class AssetsParser {
             }
             components.add(component);
         }
+        System.out.println("Found " + components.size() + " packages.");
         return components;
     }
 }

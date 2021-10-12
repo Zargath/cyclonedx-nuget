@@ -39,6 +39,7 @@ public class NugetClient {
         namespaces.put("http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd", "http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd");
         namespaces.put("http://schemas.microsoft.com/packaging/2013/01/nuspec.xsd", "http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd");
         namespaces.put("http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd", "http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd");
+        namespaces.put("http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd", "http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd");
         namespaces.put("http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd", "http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd");
         XML_OPTIONS.setLoadSubstituteNamespaces(namespaces);
     }
@@ -57,7 +58,10 @@ public class NugetClient {
         HttpResponse response = httpClient.execute(request);
         StatusLine status = response.getStatusLine();
         if (status.getStatusCode() == 200) {
+            System.out.println("Found package: " + url);
             return PackageDocument.Factory.parse(response.getEntity().getContent(), XML_OPTIONS);
+        } else {
+            System.err.println("Can't find package: " + url);
         }
         return null;
     }

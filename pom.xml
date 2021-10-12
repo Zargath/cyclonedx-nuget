@@ -23,7 +23,7 @@
     <groupId>org.cyclonedx</groupId>
     <artifactId>cyclonedx-nuget</artifactId>
     <packaging>jar</packaging>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.1.0</version>
 
     <name>CycloneDX for NuGet</name>
     <description>CycloneDX for NuGet creates an aggregate of all dependencies and transitive dependencies of a project and creates a valid CycloneDX bill-of-material document from the results. CycloneDX is a lightweight BoM specification that is easily created, human readable, and simple to parse.</description>
@@ -83,7 +83,7 @@
         <connection>scm:git:git@github.com:CycloneDX/cyclonedx-nuget.git</connection>
         <url>https://github.com/CycloneDX/cyclonedx-nuget.git</url>
         <developerConnection>scm:git:git@github.com:CycloneDX/cyclonedx-nuget.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>0.1.0-SNAPSHOT</tag>
     </scm>
 
     <issueManagement>
@@ -168,6 +168,7 @@
                 </executions>
                 <inherited>true</inherited>
                 <configuration>
+					<javaSource>1.8</javaSource>
                     <noUpa>true</noUpa>
                     <schemaDirectory>src/main/resources</schemaDirectory>
                 </configuration>
@@ -187,19 +188,6 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${maven.javadoc.plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>${maven.jar.plugin.version}</version>
                 <configuration>
@@ -210,6 +198,17 @@
                     </archive>
                 </configuration>
             </plugin>
+			<plugin>
+			  <groupId>org.apache.maven.plugins</groupId>
+			  <artifactId>maven-release-plugin</artifactId>
+			  <configuration>
+				<checkModificationExcludes>
+					<checkModificationExclude>pom.xml</checkModificationExclude>
+					<checkModificationExclude>src/main/java/org/cyclonedx/nuget/NugetClient.java</checkModificationExclude>
+					<checkModificationExclude>src/main/java/org/cyclonedx/nuget/v3/AssetsParser.java</checkModificationExclude>
+				</checkModificationExcludes>
+			  </configuration>
+			</plugin>
             <plugin>
                 <groupId>de.jutzig</groupId>
                 <artifactId>github-release-plugin</artifactId>
